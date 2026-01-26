@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog>
+
+    <changeSet id="1" author="student">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="notification_task"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="notification_task">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="chat_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notification_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sent" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="notification_task" indexName="idx_notification_date_sent">
+            <column name="notification_date"/>
+            <column name="sent"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
