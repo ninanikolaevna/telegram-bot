@@ -22,18 +22,15 @@ import java.util.regex.Pattern;
 @Service
 public class NotificationTaskService {
 
-    private final Logger logger = LoggerFactory.getLogger(NotificationTaskService.class);
-
-    @Autowired
-    private NotificationTaskRepository repository;
-
-    @Autowired
-    private TelegramBot telegramBot;
-
     private static final Pattern REMINDER_PATTERN =
             Pattern.compile("(\\d{2}\\.\\d{2}\\.\\d{4}\\s\\d{2}:\\d{2})\\s+(.+)");
     private static final DateTimeFormatter DATE_TIME_FORMATTER =
             DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    private final Logger logger = LoggerFactory.getLogger(NotificationTaskService.class);
+    @Autowired
+    private NotificationTaskRepository repository;
+    @Autowired
+    private TelegramBot telegramBot;
 
     public void processReminderMessage(Long chatId, String text) {
         Matcher matcher = REMINDER_PATTERN.matcher(text);
